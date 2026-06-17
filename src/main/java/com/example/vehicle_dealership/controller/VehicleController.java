@@ -39,4 +39,20 @@ public class VehicleController {
     public void deleteVehicle(@PathVariable int id) {
         service.deleteVehicle(id);
     }
+
+    // UPDATE vehicle
+    @PutMapping("/{id}")
+    public Vehicle updateVehicle(@PathVariable int id, @RequestBody Vehicle vehicle) {
+        Vehicle existing = service.getVehicleById(id);
+
+        if (existing == null) {
+            throw new RuntimeException("Vehicle not found with id: " + id);
+        }
+
+        existing.setMake(vehicle.getMake());
+        existing.setModel(vehicle.getModel());
+        existing.setYear(vehicle.getYear());
+
+        return service.addVehicle(existing);
+    }
 }
